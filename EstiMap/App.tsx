@@ -6,6 +6,9 @@
  */
 
 import React from 'react';
+import { Image, Button, TouchableOpacity } from 'react-native';
+import { Colors } from './colors.js';
+import TextInputField from './textinputfield.tsx';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -18,7 +21,6 @@ import {
 } from 'react-native';
 
 import {
-  Colors,
   DebugInstructions,
   Header,
   LearnMoreLinks,
@@ -37,7 +39,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
         style={[
           styles.sectionTitle,
           {
-            color: isDarkMode ? Colors.white : Colors.black,
+            color: Colors.white,
           },
         ]}>
         {title}
@@ -46,7 +48,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
         style={[
           styles.sectionDescription,
           {
-            color: isDarkMode ? Colors.light : Colors.dark,
+            color: Colors.white,
           },
         ]}>
         {children}
@@ -63,36 +65,33 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+   <View style={ styles.backgroundContainer }>
+         <View style = {{height: 40}}/>
+         <View style={styles.logoContainer}>
+             <Image
+               source={require('./imageassets/full_logo.png')}
+               style={styles.centeredImage}
+             />
+         </View>
+         <View style = {{height: 40}}/>
+         <View style={styles.authContainer}>
+            <Text style={styles.highlight}> Username</Text>
+            <TextInputField></TextInputField>
+            <View style = {{height: 70}}/>
+            <Text style={styles.highlight}> Password</Text>
+            <TextInputField></TextInputField>
+         </View>
+         <View style = {{height: 240}}/>
+         <View style={styles.buttonContainer}>
+          <TouchableOpacity
+                 style={styles.button}
+
+               >
+                 <Text style={styles.buttonText}>Let's Search!</Text>
+               </TouchableOpacity>
+          </View>
+       </View>
+
   );
 }
 
@@ -111,8 +110,55 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   highlight: {
-    fontWeight: '700',
+    // fontWeight: '700',
+    fontFamily: 'RabbidHighwaySignII',
+    fontSize: 20,
+    paddingBottom: 5,
+    paddingTop: 10,
   },
+
+ backgroundContainer: {
+      flex: 1,
+      backgroundColor: Colors.white_background,
+    },
+
+ logoContainer: {
+       justifyContent: 'top',
+       alignItems: 'center',
+       },
+
+ authContainer: {
+       paddingLeft: 20,
+       fontFamily: 'RabbidHighwaySignII',
+ },
+
+buttonContainer: {
+    alignItems: 'center',
+},
+
+ button: {
+        alignItems: 'center',
+        backgroundColor: Colors.purple,
+        height: 58,
+        color: Colors.white,
+
+        fontWeight: 'bold',
+        padding: 12,
+        width: '90%',
+        borderRadius: 30,
+ },
+
+ buttonText: {
+    color: Colors.white_background,
+    fontSize: 25,
+ },
+
+ centeredImage: {
+      // resizeMode: 'contain',
+      width: 147,
+      height: 199,
+    },
+
 });
 
 export default App;
