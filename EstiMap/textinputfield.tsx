@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     width: '95%',
     borderRadius: 30,
     opacity: 0.9,
+    fontFamily: 'RabbidHighwaySignII',
   },
 });
 

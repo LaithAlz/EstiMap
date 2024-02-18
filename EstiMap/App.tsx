@@ -119,10 +119,10 @@ const styles = StyleSheet.create({
   highlight: {
     // fontWeight: '700',
     fontFamily: 'RabbidHighwaySignII',
-    fontSize: 20,
+    fontSize: 17,
     paddingBottom: 5,
     paddingTop: 10,
-    // color: Colors.black_background,
+    color: Colors.black_background,
   },
 
  backgroundContainer: {
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
  authContainer: {
        paddingLeft: 20,
        fontFamily: 'RabbidHighwaySignII',
+       colors: Colors.black_background,
  },
 
 buttonContainer: {
@@ -159,6 +160,7 @@ buttonContainer: {
  buttonText: {
     color: Colors.white_background,
     fontSize: 25,
+    fontFamily: 'RabbidHighwaySignII',
  },
 
  centeredImage: {
