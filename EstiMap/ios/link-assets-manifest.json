@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "fontassets/RabbidHighwaySignII.otf",
+      "sha1": "ed3b4adfe11ddf470493a33757204d7a3d880572"
+    },
+    {
+      "path": "fontassets/RabbidHighwaySignIIObl.otf",
+      "sha1": "0e4dedc2649aa8a6eb559c641187ad9147a261ae"
+    }
+  ]
+}
