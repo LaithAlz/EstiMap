@@ -72,27 +72,27 @@ const App = ({navigation}: AppProps) => {
 
   const handleSubmit = async (e) => {
           e.preventDefault();
-
-          if (!email || !password) {
-            console.log("Email or Password Empty")
-          } else {
-            try {
-              const config = { headers: { "Content-type": "application/json" } };
-
-              const { data } = await axios.post(
-                "http://10.0.2.2:3001/api/user/login",
-                { email, password },
-                config
-              );
-
-              if(data){
-                 navigation.navigate("Map")
-              }
-
-            } catch (error) {
-              console.log(error);
-            }
-          }
+navigation.navigate("Map")
+//           if (!email || !password) {
+//             console.log("Email or Password Empty")
+//           } else {
+//             try {
+//               const config = { headers: { "Content-type": "application/json" } };
+//
+//               const { data } = await axios.post(
+//                 "http://10.0.2.2:3001/api/user/login",
+//                 { email, password },
+//                 config
+//               );
+//
+//               if(data){
+//                  navigation.navigate("Map")
+//               }
+//
+//             } catch (error) {
+//               console.log(error);
+//             }
+//           }
   };
 
 
@@ -107,11 +107,11 @@ const App = ({navigation}: AppProps) => {
          </View>
          <View style = {{height: 40}}/>
          <View style={styles.authContainer}>
-            <Text style={styles.highlight}> Username</Text>
-            <TextInputField  placeholder="Email" value={email} onChangeText={setEmail}></TextInputField>
+            <Text style={styles.highlight}> Email</Text>
+            <TextInputField  placeholder="" value={email} onChangeText={setEmail}></TextInputField>
             <View style = {{height: 70}}/>
             <Text style={styles.highlight}> Password</Text>
-            <TextInputField placeholder="Password" value={password} onChangeText={setPassword}></TextInputField>
+            <TextInputField placeholder="" value={password} onChangeText={setPassword}></TextInputField>
          </View>
          <View style = {{height: 240}}/>
          <View style={styles.buttonContainer}>
@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingBottom: 5,
     paddingTop: 10,
+    paddingLeft: 5,
     color: Colors.black_background,
   },
 
