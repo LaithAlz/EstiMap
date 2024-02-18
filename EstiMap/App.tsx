@@ -5,11 +5,12 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import { Image, Button, TouchableOpacity } from 'react-native';
 import { Colors } from './colors.js';
 import TextInputField from './textinputfield.tsx';
 import type {PropsWithChildren} from 'react';
+import axios from 'axios'
 
 //Navigation
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
@@ -65,11 +66,35 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 }
 
 const App = ({navigation}: AppProps) => {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+          e.preventDefault();
+
+          if (!email || !password) {
+            console.log("Email or Password Empty")
+          } else {
+            try {
+              const config = { headers: { "Content-type": "application/json" } };
+
+              const { data } = await axios.post(
+                "http://10.0.2.2:3001/api/user/login",
+                { email, password },
+                config
+              );
+
+              if(data){
+                 navigation.navigate("Map")
+              }
+
+            } catch (error) {
+              console.log(error);
+            }
+          }
   };
+
 
   return (
    <View style={ styles.backgroundContainer }>
@@ -83,17 +108,16 @@ const App = ({navigation}: AppProps) => {
          <View style = {{height: 40}}/>
          <View style={styles.authContainer}>
             <Text style={styles.highlight}> Username</Text>
-            <TextInputField></TextInputField>
+            <TextInputField  placeholder="Email" value={email} onChangeText={setEmail}></TextInputField>
             <View style = {{height: 70}}/>
             <Text style={styles.highlight}> Password</Text>
-            <TextInputField></TextInputField>
+            <TextInputField placeholder="Password" value={password} onChangeText={setPassword}></TextInputField>
          </View>
          <View style = {{height: 240}}/>
          <View style={styles.buttonContainer}>
           <TouchableOpacity
                  style={styles.button}
-                 onPress={() => navigation.navigate("Map")}
-               >
+                 onPress={handleSubmit}>
                  <Text style={styles.buttonText}>Let's Search!</Text>
                </TouchableOpacity>
           </View>

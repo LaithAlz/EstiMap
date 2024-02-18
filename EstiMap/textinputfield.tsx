@@ -4,24 +4,15 @@ import { View, TextInput, Button, Alert, StyleSheet } from 'react-native';
 
 interface TextInputProps {}
 
-const TextInputField: React.FC<MyTextInputProps> = () => {
-  const [textInputValue, setTextInputValue] = useState<string>('');
-
-  const handleTextInputChange = (text: string) => {
-    setTextInputValue(text);
-  };
-
-  const handleButtonPress = () => {
-    Alert.alert('Text Input Value', textInputValue);
-  };
+const TextInputField: React.FC<MyTextInputProps> = ({onChangeText, value, placeholder}) => {
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder=""
-        onChangeText={handleTextInputChange}
-        value={textInputValue}
+        placeholder={placeholder}
+        onChangeText={onChangeText}
+        value={value}
       />
 
     </View>
