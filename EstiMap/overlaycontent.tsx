@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 import { Colors } from './colors.js';
 
-const OverlayContent = () => {
-  const price = 1000000;
+const OverlayContent = ({selected, setPrice, price, date, setDate}) => {
+
+
   const [priceIcon, setPriceIcon] = useState('');
 
+
   useEffect(() => {
+        setPrice(parseInt(selected.price))
+
     if (price < 500000) {
       setPriceIcon('cheapprice.png');
     } else if (price < 1500000) {
@@ -14,7 +18,23 @@ const OverlayContent = () => {
     } else {
       setPriceIcon('highprice.png');
     }
-  }, []);
+  }, [selected]);
+
+  useEffect(() => {
+    if (selected.date) {
+            let year = selected.date.substring(0, 4);
+            let month = selected.date.substring(4, 6);
+            let day = selected.date.substring(6, 8);
+
+            let date = new Date(year, month - 1, day);
+            let formattedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+            setDate(formattedDate);
+        } else {
+            // Handle the case where selected.date is null or undefined
+            setDate(""); // Set date to an empty string or any default value as needed
+        }
+
+  }, [selected.date])
 
   return (
     <View style={styles.mainContainer}>
@@ -27,7 +47,7 @@ const OverlayContent = () => {
 
       <View style={styles.priceContainer}>
         <Text style={styles.highlight}>
-        1,000,000
+        {price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
             </Text>
 
         </View>
@@ -70,26 +90,26 @@ const OverlayContent = () => {
 
  <View style={styles.calendarTextContainer}>
               <Text style={styles.calendarText}>
-                   09/04/2004
+                   {date}
               </Text>
               </View>
 
 
 <View style={styles.sqftTextContainer}>
               <Text style={styles.sqftText}>
-                   4300 sqft
+                   {selected.sqft_living} sqft
               </Text>
               </View>
 
               <View style={styles.bedTextContainer}>
                             <Text style={styles.bedText}>
-                                 3 Bedroom
+                                 {selected.bedrooms} Bedroom
                             </Text>
                             </View>
 
              <View style={styles.bathTextContainer}>
                                          <Text style={styles.bathText}>
-                                              5 Bathroom
+                                              {selected.bathrooms} Bathroom
                                          </Text>
                                          </View>
 
@@ -137,7 +157,7 @@ const styles = StyleSheet.create({
    highlight: {
        // fontWeight: '700',
        fontFamily: 'RabbidHighwaySignII',
-       fontSize: 35,
+       fontSize: 25,
        color: Colors.black_background,
       // paddingBottom: 5,
        // paddingTop: 10,

@@ -8,9 +8,16 @@ import type {PropsWithChildren} from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import SearchBar from './searchbar.tsx';
 import OverlayContent from './overlaycontent.tsx';
+import dataFile from './kc_house_data.json'
+
 
 const Map = () => {
-    useEffect(() => {
+  const [markers, setMarkers] = useState([]);
+  const [selected, setSelected] = useState({})
+  const [price, setPrice] = useState(0)
+  const [date, setDate] = useState(0)
+
+  useEffect(() => {
     const backAction = () => {
       // Prevent going back
       return true;
@@ -18,7 +25,15 @@ const Map = () => {
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
-fitToMarker();
+    // Directly use the imported JSON data
+    try {
+      const first150 = dataFile.slice(0, 5);
+      setMarkers(first150);
+    } catch (error) {
+      console.error("Failed to process data:", error);
+    }
+
+    // fitToMarker(); // Ensure this function is correctly defined and called here if necessary
 
     return () => {
       // Remove the event listener when the component is unmounted
@@ -26,7 +41,15 @@ fitToMarker();
     };
   }, []);
 
-const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
+  useEffect(() => {
+  console.log(markers)
+  }, [markers])
+
+  useEffect(() => {
+  console.log(selected)
+  }, [selected])
+
+const markerCoordinates = { latitude: 47, longitude: -122.4324 };
 
     const mapRef = useRef(null);
 
@@ -46,10 +69,10 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
 
 
     const [region, setRegion] = useState({
-      latitude: 43.43555797436538,
-      longitude: -79.75324749002645,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      latitude: 47,
+      longitude: -122,
+      latitudeDelta: 1,
+      longitudeDelta: 1,
     });
 
  const zoomIn = () => {
@@ -90,11 +113,16 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
                  region={region}
                  onRegionChangeComplete={newRegion => setRegion(newRegion)}
                >
-                 <Marker
-                   coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
-                   title="Marker Title"
-                   description="Marker Description"
-                 />
+                 {
+                   markers.length > 0 && markers.map((marker, index) => (
+                     <Marker
+                       key={index}
+                       coordinate={{ latitude: parseFloat(marker.lat), longitude: parseFloat(marker.long) }}
+                       title={marker.price ? parseInt(marker.price).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : ""}
+                       onPress={() => {setSelected(marker)}}
+                     />
+                   ))
+                 }
                </MapView>
 
 
@@ -132,7 +160,7 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
                                                                                 </TouchableOpacity>
                                                                                 </View>
  <View style = {styles.contentContainer}>
-    <OverlayContent/>
+    <OverlayContent selected={selected} setPrice={setPrice} price={price} setDate={setDate} date={date} />
             </View>
             </View>
 

@@ -1,20 +1,40 @@
 import React, { useState } from 'react';
+import { View, Button, Platform, StyleSheet } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Colors } from './colors.js';
-import { View, TextInput, Button, Alert, StyleSheet } from 'react-native';
 
-interface TextInputProps {}
+const SearchBar = ({ onChangeDate }) => {
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
 
-const SearchBar: React.FC<MyTextInputProps> = ({onChangeText, value, placeholder}) => {
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    if (onChangeDate) {
+      onChangeDate(currentDate);
+    }
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
+  };
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search for a home..."
-        onChangeText={onChangeText}
-        value={value}
-      />
-
+      <View>
+        <Button onPress={showDatepicker} title="Select Date" color={Colors.purple} />
+      </View>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={'date'}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
     </View>
   );
 };
@@ -22,24 +42,10 @@ const SearchBar: React.FC<MyTextInputProps> = ({onChangeText, value, placeholder
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  // <Button title="Submit" onPress={handleButtonPress} />
-  input: {
-    height: 30,
-    // borderColor: '',
-    backgroundColor: Colors.gray,
-    borderWidth: 0,
-    //marginBottom: 16,
-    paddingLeft: 17,
-    padding: 8,
-    width: '100%',
-    borderRadius: 30,
-    opacity: 0.9,
-    fontFamily: 'RabbidHighwaySignII',
-  },
+  // Your existing styles
 });
 
 export default SearchBar;
