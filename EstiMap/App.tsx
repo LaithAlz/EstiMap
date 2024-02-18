@@ -85,7 +85,6 @@ function App(): React.JSX.Element {
          <View style={styles.buttonContainer}>
           <TouchableOpacity
                  style={styles.button}
-
                >
                  <Text style={styles.buttonText}>Let's Search!</Text>
                </TouchableOpacity>
@@ -115,6 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom: 5,
     paddingTop: 10,
+    // color: Colors.black_background,
   },
 
  backgroundContainer: {
