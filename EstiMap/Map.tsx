@@ -43,6 +43,19 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
      }
    };
 
+   const zoomOut = () => {
+     const newRegion = {
+       latitude: markerCoordinates.latitude,
+       longitude: markerCoordinates.longitude,
+       latitudeDelta: 0.5, // Broaden the area
+       longitudeDelta: 0.5, // Broaden the area
+     };
+
+     if (mapRef.current) {
+       mapRef.current.animateToRegion(newRegion, 1000); // 1000ms animation duration
+     }
+   };
+
 
     return (
         <View style={styles.container}>
@@ -78,28 +91,22 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
                                 />
                               </MapView>
 
-
+<Button title="Zoom Out" onPress={zoomOut} />
 
 
 
               <View style = {styles.tabContainer}/>
                <View style = {styles.houseContainer}>
-                    <Image
-                                   source={require('./imageassets/house_overlay_transparent.png')}
-                                   style={{width: 500, height: 130}}
-                                 />
+                    <Image source={require('./imageassets/house_overlay_transparent.png')} style={{width: 500, height: 130}} />
                   </View>
 
-<View style = {styles.searchBarContainer}>
+                <View style = {styles.searchBarContainer}>
                               <SearchBar/>
                                </View>
 
-<View style = {styles.magnifyingGlassContainer}>
-                               <Image
-                                                                  source={require('./imageassets/61088.png')}
-                                                                  style={{width: 20, height: 20}}
-                                                                />
-                                                                </View>
+                    <View style = {styles.magnifyingGlassContainer}>
+                               <Image source={require('./imageassets/61088.png')} style={{width: 20, height: 20}} />
+                    </View>
             </View>
 
     )
