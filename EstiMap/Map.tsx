@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BackHandler } from 'react-native';
 import { Image, Button, TouchableOpacity } from 'react-native';
 import { Colors } from './colors.js';
@@ -43,19 +43,29 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
      }
    };
 
-   const zoomOut = () => {
-     const newRegion = {
-       latitude: markerCoordinates.latitude,
-       longitude: markerCoordinates.longitude,
-       latitudeDelta: 0.5, // Broaden the area
-       longitudeDelta: 0.5, // Broaden the area
-     };
 
-     if (mapRef.current) {
-       mapRef.current.animateToRegion(newRegion, 1000); // 1000ms animation duration
-     }
-   };
+    const [region, setRegion] = useState({
+      latitude: 43.43555797436538,
+      longitude: -79.75324749002645,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
 
+ const zoomIn = () => {
+   setRegion(prevRegion => ({
+     ...prevRegion,
+     latitudeDelta: prevRegion.latitudeDelta / 2,
+     longitudeDelta: prevRegion.longitudeDelta / 2,
+   }));
+ };
+
+ const zoomOut = () => {
+   setRegion(prevRegion => ({
+     ...prevRegion,
+     latitudeDelta: prevRegion.latitudeDelta * 2,
+     longitudeDelta: prevRegion.longitudeDelta * 2,
+   }));
+ };
 
     return (
         <View style={styles.container}>
@@ -72,26 +82,21 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
 
 
 
-                <MapView
-                              provider={PROVIDER_GOOGLE}
-                              ref={mapRef}
-                                style={styles.map}
-                                initialRegion={{
-                                  latitude: 43.43555797436538,
-                                  longitude: -79.75324749002645,
-                                  latitudeDelta: 0.0922,
-                                  longitudeDelta: 0.0421,
-                                }}
+               <MapView
+                 provider={PROVIDER_GOOGLE}
+                 ref={mapRef}
+                 style={styles.map}
+                 region={region}
+                 onRegionChangeComplete={newRegion => setRegion(newRegion)}
+               >
+                 <Marker
+                   coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+                   title="Marker Title"
+                   description="Marker Description"
+                 />
+               </MapView>
 
-                              >
-                                <Marker
-                                  coordinate={markerCoordinates}
-                                  title="Marker Title"
-                                  description="Marker Description"
-                                />
-                              </MapView>
 
-<Button title="Zoom Out" onPress={zoomOut} />
 
 
 
@@ -107,7 +112,28 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
                     <View style = {styles.magnifyingGlassContainer}>
                                <Image source={require('./imageassets/61088.png')} style={{width: 20, height: 20}} />
                     </View>
+
+                    <View style = {styles.button2Container}>
+                                        <TouchableOpacity onPress={zoomOut}>
+                                          <Image
+                                            source={require('./imageassets/minus-button.png')} // Adjust the path according to your project structure
+                                            style={{ height: 30, width: 30 }}
+                                          />
+                                        </TouchableOpacity>
+                                        </View>
+
+                                        <View style = {styles.button1Container}>
+                                                                                <TouchableOpacity onPress={zoomIn}>
+                                                                                  <Image
+                                                                                    source={require('./imageassets/plus-button.png')} // Adjust the path according to your project structure
+                                                                                    style={{ height: 30, width: 30 }}
+                                                                                  />
+                                                                                </TouchableOpacity>
+                                                                                </View>
+
             </View>
+
+
 
     )
 };
@@ -191,6 +217,25 @@ const styles = StyleSheet.create({
             alignItems: "center",
                     justifyContainer: "center",
             },
+
+             button1Container: {
+                        width: 30,
+                        height: 30,
+                        left: 170,
+                        bottom: 1380,
+                        alignItems: "center",
+                                justifyContainer: "center",
+                        },
+
+              button2Container: {
+                                     width: 30,
+                                     height: 30,
+                                     left: -170,
+
+                                     bottom: 1350,
+                                     alignItems: "center",
+                                             justifyContainer: "center",
+                                     },
 
 
 
