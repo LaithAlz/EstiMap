@@ -10,6 +10,13 @@ import { Image, Button, TouchableOpacity } from 'react-native';
 import { Colors } from './colors.js';
 import TextInputField from './textinputfield.tsx';
 import type {PropsWithChildren} from 'react';
+
+//Navigation
+import {NativeStackScreenProps} from "@react-navigation/native-stack";
+import {RootStackParamList} from './AppNavigator';
+
+type AppProps = NativeStackScreenProps<RootStackParamList, 'App'>
+
 import {
   SafeAreaView,
   ScrollView,
@@ -57,7 +64,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   );
 }
 
-function App(): React.JSX.Element {
+const App = ({navigation}: AppProps) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -85,6 +92,7 @@ function App(): React.JSX.Element {
          <View style={styles.buttonContainer}>
           <TouchableOpacity
                  style={styles.button}
+                 onPress={() => navigation.navigate("Map")}
                >
                  <Text style={styles.buttonText}>Let's Search!</Text>
                </TouchableOpacity>
