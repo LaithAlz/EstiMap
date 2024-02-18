@@ -6,7 +6,8 @@ import { Colors } from './colors.js';
 import TextInputField from './textinputfield.tsx';
 import type {PropsWithChildren} from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import SearchBar from './searchbar.tsx'
+import SearchBar from './searchbar.tsx';
+import OverlayContent from './overlaycontent.tsx';
 
 const Map = () => {
     useEffect(() => {
@@ -130,8 +131,12 @@ const markerCoordinates = { latitude: 37.78825, longitude: -122.4324 };
                                                                                   />
                                                                                 </TouchableOpacity>
                                                                                 </View>
-
+ <View style = {styles.contentContainer}>
+    <OverlayContent/>
             </View>
+            </View>
+
+
 
 
 
@@ -236,6 +241,21 @@ const styles = StyleSheet.create({
                                      alignItems: "center",
                                              justifyContainer: "center",
                                      },
+
+              contentContainer: {
+                                        width: 392,
+                                                   height: 160,
+                                                   left: 0,
+                                                   width: '95%',
+
+                                                   bottom: 820,
+                                                   alignItems: "center",
+                                                           justifyContainer: "center",
+
+
+
+
+              },
 
 
 
