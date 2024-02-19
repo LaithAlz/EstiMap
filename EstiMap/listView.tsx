@@ -5,8 +5,8 @@
  * @format
  */
 
-import React from 'react';
-import { Image, Button, TouchableOpacity, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Button, TouchableOpacity, FlatList, } from 'react-native';
 import { Colors } from './colors.js';
 import SearchField from './searchfield.tsx';
 import type {PropsWithChildren} from 'react';
@@ -65,20 +65,29 @@ function listView(): React.JSX.Element {
   };
 
   const data = [
-    {id: '1', text:'House 1' },
-    {id: '2', text:'House 2' },
-    {id: '3', text:'House 3' },
-   ];
+      { id: '1', text: 'House 1', image: require('./imageassets/house1.jpg'), price: '$1,500,000.00' },
+      { id: '2', text: 'House 2', image: require('./imageassets/house2.jpg'), price: '$900,000.00' },
+      { id: '3', text: 'House 3', image: require('./imageassets/house3.jpg'), price: '$850,000.00'},
+      { id: '4', text: 'House 4', image: require('./imageassets/house4.jpg'), price: '$1,200,000.00'},
+    ];
+  const [selectedOption, setSelectedOption] = useState(null); //filter options
 
-  const renderItem = ({ item }) => (
-    <View style = {styles.listIem}>
-        <Text>{item.text}</Text>
-    </View>
-   );
+  const options = ['Increasing price', 'Decreasing Price', 'Distance'];
+
+  const handleOptionPress = (option) => {
+      setSelectedOption(option === selectedOption ? null : option);
+    };
+
+    const renderItem = ({ item }) => (
+      <View style={styles.listItem}>
+        <Image source={item.image} style={styles.itemImage} />
+        <Text>{item.text}      Price: {item.price}</Text>
+      </View>
+    );
 
   return (
    <View style={ styles.backgroundContainer }>
-         <View style={styles.whiteStrip}>
+         <View>
              <View style={styles.logoContainer}>
                  <Image
                    source={require('./imageassets/text_logo.png')}
@@ -90,9 +99,21 @@ function listView(): React.JSX.Element {
          <View style={styles.subheaderContainer}>
          <SearchField></SearchField>
          </View>
-        <View style = {{height: 80}}/>
-
-        <View style={styles.listcontainer}>
+         <Text style = {styles.choose}> Filters:</Text>
+         <View style={styles.scrollView}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {options.map((option) => (
+                  <TouchableOpacity
+                    key={option}
+                    style={[styles.option, { backgroundColor: option === selectedOption ? Colors.green : Colors.grey, }]}
+                    onPress={() => handleOptionPress(option)}
+                  >
+                    <Text style={styles.optionText}>{option}</Text>
+                  </TouchableOpacity>
+                ))}
+        </ScrollView>
+        </View>
+        <View style={styles.listContainer}>
               <FlatList
                 data={data}
                 renderItem={renderItem}
@@ -104,7 +125,7 @@ function listView(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  whileStrip: {
+  whiteStrip: {
   backgroundColor: 'white',
   height: 10, // Adjust the height according to your design
   width: '100%',
@@ -113,6 +134,19 @@ const styles = StyleSheet.create({
   paddingBottom: 5,
   paddingTop: 10,
   },
+  listItem: {
+  flexDirection: 'row',
+  width: '100%',
+  height: 120,
+  backgroundColor: Colors.grey,
+  borderWidth: 1,
+  BorderColor: 'black',
+  fontFamily: 'RabbidHighwaySignII',
+  fontSize: 20,
+  justifyContent: 'left',
+  alignItems: 'center',
+  paddingLeft:25,
+   },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
@@ -162,18 +196,6 @@ buttonContainer: {
     alignItems: 'center',
 },
 
- listItem: {
-    flex: 1,
-    width: '100%',
-    height: 40,
-    backgroundColor: Colors.grey,
-    borderWidth: 5,
-    BorderColor: Colors.black_background,
-    fontFamily: 'RabbidHighwaySignII',
-    fontSize: 20,
-    paddingBottom: 5,
-    paddingTop: 10,
- },
  button: {
         alignItems: 'center',
         backgroundColor: Colors.purple,
@@ -197,12 +219,35 @@ buttonContainer: {
       height: 199,
     },
 
-listcontainer: {
+ scrollView: {
+    flexDirection: 'row',
+    width: '100%',
+    height: 20,
+    backgroundColor: Colors.grey,
+    },
+listContainer: {
     width: '100%',
     backgroundColor: Colors.grey,
-    height:250,
+    height:100,
     flex: 1,
     },
+ option: {
+    marginRight:20,
+    marginLeft:20,
+    flex: 1,
+
+ },
+ itemImage: {
+ width: 75,
+ height: 75,
+ marginRight:10,
+ borderRadius: 25,
+ },
+ choose: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.black_background,
+ },
  textLogo: {
     width: 147,
     height: 40.
