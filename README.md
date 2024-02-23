@@ -13,9 +13,12 @@ First, enjoy a seamless login experience that is primed to securely allow access
 Great, now that you have safely logged in, you're all set to see the future! The following are some images to showcase some of the app's visuals.
 
 Viewing a home's key information:
+
 ![Screenshot 2024-02-23 at 6 19 19 PM](https://github.com/LaithAlz/EstimaMap/assets/140688960/bb3de95d-39a5-4ed8-9a36-88f87912ae49)
 
+
 Selecting a date to forecast:
+
 ![Screenshot 2024-02-23 at 6 20 19 PM](https://github.com/LaithAlz/EstimaMap/assets/140688960/4bb9ff7a-fde1-4b2a-8164-8363edfd414d)
 
 
