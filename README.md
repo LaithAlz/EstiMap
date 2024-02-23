@@ -39,5 +39,7 @@ For all three of us, this project came with a lot of ups and downs, sadly ending
 Feel free to reach out to us via email to chat or follow our respective journeys as Computer Science Students at the University of Toronto Mississauga. We would love to connect!
 
 **Laith Alzoubi:** laith.alzoubi@mail.utoronto.ca
+
 **Omar El Malak:** omar.elmalak@mail.utoronto.ca
+
 **Nabeel Abu-Awad:** nabeel.abuawad@mail.utoronto.ca
