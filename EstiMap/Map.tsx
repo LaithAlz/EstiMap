@@ -138,9 +138,8 @@ const markerCoordinates = { latitude: 47, longitude: -122.4324 };
                               <SearchBar/>
                                </View>
 
-                    <View style = {styles.magnifyingGlassContainer}>
-                               <Image source={require('./imageassets/61088.png')} style={{width: 20, height: 20}} />
-                    </View>
+                    <View style = {{height: 120}}/>
+
 
                     <View style = {styles.button2Container}>
                                         <TouchableOpacity onPress={zoomOut}>
@@ -236,7 +235,7 @@ const styles = StyleSheet.create({
       },
 
       searchBarContainer: {
-      bottom: 1115,
+      bottom: 1125,
       left: 0,
       width: '65%',
       height: 50,
@@ -255,7 +254,7 @@ const styles = StyleSheet.create({
                         width: 30,
                         height: 30,
                         left: 170,
-                        bottom: 1380,
+                        bottom: 1370,
                         alignItems: "center",
                                 justifyContainer: "center",
                         },
@@ -265,7 +264,7 @@ const styles = StyleSheet.create({
                                      height: 30,
                                      left: -170,
 
-                                     bottom: 1350,
+                                     bottom: 1340,
                                      alignItems: "center",
                                              justifyContainer: "center",
                                      },
