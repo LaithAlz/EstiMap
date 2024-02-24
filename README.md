@@ -4,7 +4,7 @@ An AI-powered Android mobile application aimed to provide a predictive forecast 
 
 ## Project Overview
 
-Wondering whether it is time to buy or sell your home? Unsure about housing prices in today's turbulent housing market? Estimap is here to help! Estimap allows a sneak peek into the past and uses AI to make predictive models on future housing prices so you know exactly when the right time would be to sell a home of similar value to yours, or buy a home. Whether you are in the market for purchasing, selling, renting, or just browsing luxury homes after a long day of work, we see you, we hear you, and we are here to help you!
+Wondering whether it is time to buy or sell your home? Unsure about housing prices in today's turbulent housing market? EstiMap is here to help! Estimap allows a sneak peek into the past and uses AI to make predictive models on future housing prices so you know exactly when the right time would be to sell a home of similar value to yours, or buy a home. Whether you are in the market for purchasing, selling, renting, or just browsing luxury homes after a long day of work, we see you, we hear you, and we are here to help you!
 
 First, enjoy a seamless **login experience** that is primed to securely allow access to your account so you can start browsing! We'll take care of the rest.
 
