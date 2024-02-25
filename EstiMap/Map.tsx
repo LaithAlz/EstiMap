@@ -8,19 +8,14 @@ import type {PropsWithChildren} from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import SearchBar from './searchbar.tsx';
 import OverlayContent from './overlaycontent.tsx';
-import axios from "axios"
 import dataFile from './kc_house_data.json'
 
 
 const Map = () => {
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState({})
-  const [price, setPrice] = useState("")
-  const [date, setDate] = useState("")
-
-
-
-
+  const [price, setPrice] = useState(0)
+  const [date, setDate] = useState(0)
 
   useEffect(() => {
     const backAction = () => {
@@ -32,8 +27,8 @@ const Map = () => {
 
     // Directly use the imported JSON data
     try {
-      const first5 = dataFile.slice(0, 5);
-      setMarkers(first5);
+      const first150 = dataFile.slice(0, 5);
+      setMarkers(first150);
     } catch (error) {
       console.error("Failed to process data:", error);
     }
@@ -252,7 +247,7 @@ const styles = StyleSheet.create({
       },
 
       searchBarContainer: {
-      bottom: 1115,
+      bottom: 1125,
       left: 0,
       width: '65%',
       height: 50,
@@ -271,7 +266,7 @@ const styles = StyleSheet.create({
                         width: 30,
                         height: 30,
                         left: 170,
-                        bottom: 1380,
+                        bottom: 1370,
                         alignItems: "center",
                                 justifyContainer: "center",
                         },
@@ -281,7 +276,7 @@ const styles = StyleSheet.create({
                                      height: 30,
                                      left: -170,
 
-                                     bottom: 1350,
+                                     bottom: 1340,
                                      alignItems: "center",
                                              justifyContainer: "center",
                                      },
