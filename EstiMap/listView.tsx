@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { Image, Button, TouchableOpacity, FlatList, } from 'react-native';
 import { Colors } from './colors.js';
 import SearchField from './searchfield.tsx';
+import TextInputField from './textinputfield.tsx';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -72,7 +73,7 @@ function listView(): React.JSX.Element {
     ];
   const [selectedOption, setSelectedOption] = useState(null); //filter options
 
-  const options = ['Increasing price', 'Decreasing Price', 'Distance'];
+  const options = ['  Increasing price  ', '  Decreasing Price  ', '  Distance  '];
 
   const handleOptionPress = (option) => {
       setSelectedOption(option === selectedOption ? null : option);
@@ -81,7 +82,7 @@ function listView(): React.JSX.Element {
     const renderItem = ({ item }) => (
       <View style={styles.listItem}>
         <Image source={item.image} style={styles.itemImage} />
-        <Text>{item.text}      Price: {item.price}</Text>
+        <Text style = {styles.itemText}>{item.text}      Price: {item.price}</Text>
       </View>
     );
 
@@ -97,7 +98,7 @@ function listView(): React.JSX.Element {
          </View>
 
          <View style={styles.subheaderContainer}>
-         <SearchField></SearchField>
+         <SearchField><Text>Search for a location</Text></SearchField>
          </View>
          <Text style = {styles.choose}> Filters:</Text>
          <View style={styles.scrollView}>
@@ -105,7 +106,7 @@ function listView(): React.JSX.Element {
                 {options.map((option) => (
                   <TouchableOpacity
                     key={option}
-                    style={[styles.option, { backgroundColor: option === selectedOption ? Colors.green : Colors.grey, }]}
+                    style={[styles.option, { backgroundColor: option === selectedOption ? Colors.green : Colors.grey, borderRadius:90, }]}
                     onPress={() => handleOptionPress(option)}
                   >
                     <Text style={styles.optionText}>{option}</Text>
@@ -170,6 +171,7 @@ const styles = StyleSheet.create({
   },
 
  subheaderContainer: {
+    fontFamily: 'RabbidHighwaySignII',
     backgroundColor: Colors.dark_purple,
     justifyContent: 'center',
     alignItems: 'center',
@@ -211,6 +213,7 @@ buttonContainer: {
  buttonText: {
     color: Colors.white_background,
     fontSize: 25,
+    fontFamily: 'RabbidHighwaySignII',
  },
 
  centeredImage: {
@@ -224,16 +227,20 @@ buttonContainer: {
     width: '100%',
     height: 20,
     backgroundColor: Colors.grey,
+    fontFamily: 'RabbidHighwaySignII',
     },
 listContainer: {
     width: '100%',
     backgroundColor: Colors.grey,
     height:100,
     flex: 1,
+    fontFamily: 'RabbidHighwaySignII',
     },
  option: {
-    marginRight:20,
-    marginLeft:20,
+    width: '100%',
+    marginRight:10,
+    marginLeft:10,
+    fontFamily: 'RabbidHighwaySignII',
     flex: 1,
 
  },
@@ -246,11 +253,16 @@ listContainer: {
  choose: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'RabbidHighwaySignII',
     color: Colors.black_background,
  },
  textLogo: {
     width: 147,
     height: 40.
+    },
+ itemText: {
+    fontFamily: 'RabbidHighwaySignII',
+    color: 'black',
     },
 });
 
