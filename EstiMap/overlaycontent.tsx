@@ -34,7 +34,7 @@ const OverlayContent = ({selected, setPrice, price, date, setDate}) => {
             setDate(""); // Set date to an empty string or any default value as needed
         }
 
-  }, [selected.date])
+  }, [selected.date, date])
 
   return (
     <View style={styles.mainContainer}>

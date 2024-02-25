@@ -8,14 +8,19 @@ import type {PropsWithChildren} from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import SearchBar from './searchbar.tsx';
 import OverlayContent from './overlaycontent.tsx';
+import axios from "axios"
 import dataFile from './kc_house_data.json'
 
 
 const Map = () => {
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState({})
-  const [price, setPrice] = useState(0)
-  const [date, setDate] = useState(0)
+  const [price, setPrice] = useState("")
+  const [date, setDate] = useState("")
+
+
+
+
 
   useEffect(() => {
     const backAction = () => {
@@ -27,8 +32,8 @@ const Map = () => {
 
     // Directly use the imported JSON data
     try {
-      const first150 = dataFile.slice(0, 5);
-      setMarkers(first150);
+      const first5 = dataFile.slice(0, 5);
+      setMarkers(first5);
     } catch (error) {
       console.error("Failed to process data:", error);
     }
@@ -46,7 +51,7 @@ const Map = () => {
   }, [markers])
 
   useEffect(() => {
-  console.log(selected)
+  console.log(`SEL: ${selected}`)
   }, [selected])
 
 const markerCoordinates = { latitude: 47, longitude: -122.4324 };
@@ -71,8 +76,8 @@ const markerCoordinates = { latitude: 47, longitude: -122.4324 };
     const [region, setRegion] = useState({
       latitude: 47,
       longitude: -122,
-      latitudeDelta: 1,
-      longitudeDelta: 1,
+      latitudeDelta: 3,
+      longitudeDelta: 3,
     });
 
  const zoomIn = () => {
@@ -90,6 +95,18 @@ const markerCoordinates = { latitude: 47, longitude: -122.4324 };
      longitudeDelta: prevRegion.longitudeDelta * 2,
    }));
  };
+
+ const setS = (marker) => {
+
+    setSelected(marker);
+    console.log(marker.date)
+
+
+
+    setDate(marker.date)
+
+
+ }
 
     return (
         <View style={styles.container}>
@@ -119,7 +136,7 @@ const markerCoordinates = { latitude: 47, longitude: -122.4324 };
                        key={index}
                        coordinate={{ latitude: parseFloat(marker.lat), longitude: parseFloat(marker.long) }}
                        title={marker.price ? parseInt(marker.price).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : ""}
-                       onPress={() => {setSelected(marker)}}
+                       onPress={() => {setS(marker)}}
                      />
                    ))
                  }
@@ -135,11 +152,10 @@ const markerCoordinates = { latitude: 47, longitude: -122.4324 };
                   </View>
 
                 <View style = {styles.searchBarContainer}>
-                              <SearchBar/>
+                              <SearchBar setFDate={setDate} fDate={date} selected={selected} />
                                </View>
 
                     <View style = {styles.magnifyingGlassContainer}>
-                               <Image source={require('./imageassets/61088.png')} style={{width: 20, height: 20}} />
                     </View>
 
                     <View style = {styles.button2Container}>
