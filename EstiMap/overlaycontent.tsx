@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 import { Colors } from './colors.js';
 
-const OverlayContent = ({selected, setPrice, price, date, setDate}) => {
+const OverlayContent = ({selected, date, setDate, price, setPrice}) => {
 
 
   const [priceIcon, setPriceIcon] = useState('');
@@ -19,6 +19,8 @@ const OverlayContent = ({selected, setPrice, price, date, setDate}) => {
       setPriceIcon('highprice.png');
     }
   }, [selected]);
+
+
 
   useEffect(() => {
     if (selected.date) {

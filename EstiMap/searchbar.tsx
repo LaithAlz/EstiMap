@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { View, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import DatePicker from 'react-native-date-picker';
+import axios from "axios"
 
-const SearchBar = ({ setFDate, fDate, selected }) => {
-  const [date, setDate] = useState(null); // Start with no date selected
+const SearchBar = ({ setFDate, fDate, selected, setPrice, formatted, setFormatted }) => {
+  const [date, setDate] = useState(null);
   const [open, setOpen] = useState(false);
-  const [formatted, setFormatted] = useState("");
 
-  // Formatting date for display
+  const fetchPrediction = async (date, selected) => {
+    const payload = {
+            date: date,
+            selected: selected,
+        };
+
+        try {
+            const response = await axios.post('http://10.0.2.2:3001/predict', payload);
+            console.log('Prediction Response:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching prediction:', error.response ? error.response.data : error.message);
+        }
+
+  }
+
+
   const formatDate = (date) => {
-    if (!date) { // Check if date is null
-      setFormatted(""); // Set formatted string to empty
-      setFDate(""); // Assuming setFDate can handle empty strings or null
+    if (!date) {
+      setFormatted("");
+      setFDate("");
       return "";
     }
 
@@ -22,8 +38,21 @@ const SearchBar = ({ setFDate, fDate, selected }) => {
   };
 
   useEffect(() => {
-    formatDate(date); // Call formatDate when date changes
+    formatDate(date);
+//     console.log(`fdate: ${formatted}`)
+
+    const getPrediction = async () => {
+          const predictionData = await fetchPrediction(formatted, selected);
+          if (predictionData && predictionData.predicted_price) {
+            console.log(predictionData.predicted_price);
+            setPrice(Math.floor(predictionData.predicted_price));
+          }
+        };
+
+        getPrediction();
+
   }, [date]);
+
 
   return (
     <View style={styles.container}>
@@ -62,12 +91,12 @@ const styles = StyleSheet.create({
 //      padding: 20,
    },
    selectedDateText: {
-     fontSize: 16,
+     fontSize: 15,
      color: '#fff', // Dark text for readability
 //      marginBottom: 10, // Space above the button
    },
    button: {
-     backgroundColor: '#007bff', // Vibrant blue background for the button
+     backgroundColor: '#5D3FD3', // Vibrant blue background for the button
      paddingHorizontal: 20,
      paddingVertical: 10,
      borderRadius: 20, // Rounded corners
@@ -78,7 +107,7 @@ const styles = StyleSheet.create({
    },
    buttonText: {
      color: '#fff', // White text for contrast
-     fontSize: 18,
+     fontSize: 16,
    },
  });
 

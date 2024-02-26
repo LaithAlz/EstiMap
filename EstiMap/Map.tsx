@@ -16,16 +16,17 @@ const Map = () => {
   const [selected, setSelected] = useState({})
   const [price, setPrice] = useState(0)
   const [date, setDate] = useState(0)
+  const [formatted, setFormatted] = useState("");
+
+
 
   useEffect(() => {
     const backAction = () => {
-      // Prevent going back
       return true;
     };
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
-    // Directly use the imported JSON data
     try {
       const first150 = dataFile.slice(0, 5);
       setMarkers(first150);
@@ -33,10 +34,8 @@ const Map = () => {
       console.error("Failed to process data:", error);
     }
 
-    // fitToMarker(); // Ensure this function is correctly defined and called here if necessary
 
     return () => {
-      // Remove the event listener when the component is unmounted
       backHandler.remove();
     };
   }, []);
@@ -52,21 +51,7 @@ const Map = () => {
 const markerCoordinates = { latitude: 47, longitude: -122.4324 };
 
     const mapRef = useRef(null);
-
-  // Calculate padding for the map bounds (optional)
   const padding = 50;
-
-
-    // Function to fit the map to the marker
- const fitToMarker = () => {
-     if (mapRef.current) {
-       mapRef.current.fitToCoordinates([markerCoordinates], {
-         edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
-         animated: true,
-       });
-     }
-   };
-
 
     const [region, setRegion] = useState({
       latitude: 47,
@@ -94,13 +79,7 @@ const markerCoordinates = { latitude: 47, longitude: -122.4324 };
  const setS = (marker) => {
 
     setSelected(marker);
-    console.log(marker.date)
-
-
-
     setDate(marker.date)
-
-
  }
 
     return (
@@ -147,7 +126,7 @@ const markerCoordinates = { latitude: 47, longitude: -122.4324 };
                   </View>
 
                 <View style = {styles.searchBarContainer}>
-                              <SearchBar setFDate={setDate} fDate={date} selected={selected} />
+                              <SearchBar formatted={formatted} setFormatted={setFormatted} setPrice={setPrice} setFDate={setDate} fDate={date} selected={selected} />
                                </View>
 
                     <View style = {styles.magnifyingGlassContainer}>

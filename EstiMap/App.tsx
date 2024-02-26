@@ -72,7 +72,7 @@ const App = ({navigation}: AppProps) => {
 
   const handleSubmit = async (e) => {
           e.preventDefault();
-navigation.navigate("Map")
+           navigation.navigate("Map")
 //           if (!email || !password) {
 //             console.log("Email or Password Empty")
 //           } else {

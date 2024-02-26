@@ -1,15 +1,11 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+
 
 import pandas as pd
 from joblib import load
+import sys
+import json
 
 
-
-app = Flask(__name__)
-# CORS(app, resources={r"/api/*": {"origins": "*"}})
-
-# Load the model and scaler
 model = load('linear_regression_model.joblib')
 scaler = load('scaler.joblib')
 
@@ -20,7 +16,6 @@ def predict_house_price(date, other):
     month = date.month
     day = date.day
 
-    # Assuming 'other' is a dictionary with the necessary keys
     new_data = {
         'bedrooms': other['bedrooms'],
         'bathrooms': other['bathrooms'],
@@ -52,24 +47,15 @@ def predict_house_price(date, other):
 
     predicted_price = model.predict(new_data_scaled)
 
-    return predicted_price
 
-    # return predicted_price[0]
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    # data = request.json
-    # Ensure 'other' data is extracted correctly from the request
-    # other_data = {key: data[key] for key in data if key != 'date'}
-
-
-    # predicted_price = predict_house_price(data['date'], data)
-    # return jsonify({'predicted_price': predicted_price})
-
-    return jsonify({"message": "Test endpoint is accessible"})
-
-    # return "hello"
+    return predicted_price[0]
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    input_data = sys.argv[1]
+    parsed_data = json.loads(input_data)
 
+    date = parsed_data.get('date')
+    other = parsed_data.get('selected')
+
+    prediction = predict_house_price(date, other)
+    print(prediction)
